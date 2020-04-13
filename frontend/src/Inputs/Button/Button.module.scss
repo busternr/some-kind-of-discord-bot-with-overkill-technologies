@@ -1,0 +1,27 @@
+.button {
+  background-color: #4CAF50;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 16px;
+  border-radius: 30px;
+}
+
+.small {
+  width: 120px;
+  height: 40px;
+}
+
+.normal {
+  width: 160px;
+  height: 60px;
+}
+
+.big {
+  width: 200px;
+  height: 80px;
+}
