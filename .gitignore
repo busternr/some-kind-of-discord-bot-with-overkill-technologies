@@ -1,3 +1,6 @@
 /node_modules
 *.log
-/.idea
+.idea
+backend/.mvn/
+.DS_Store
+backend/target/
