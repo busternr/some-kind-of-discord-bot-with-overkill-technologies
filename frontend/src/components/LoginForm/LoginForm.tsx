@@ -2,15 +2,18 @@ import React from 'react';
 import {Form} from "react-final-form";
 import Button, {ButtonSize} from "../Inputs/Button/Button";
 import Input from "../Inputs/Input/Input";
+import {connect} from "../../api/websocket";
 
 interface FormValues {
     username: string;
     password: string;
 }
 
+const client = connect();
+
 const LoginForm: React.FC = () => {
-    const onSubmit = ({username, password}: FormValues) => {
-        console.log('Submit ', username, password)
+    const onSubmit = ({ username, password}: FormValues) => {
+        client.publish({ destination: '/echo', body: 'Hello world' });
     };
 
     return (
