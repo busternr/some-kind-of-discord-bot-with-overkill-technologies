@@ -1,20 +1,19 @@
-import {  Client } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 
 export const connect = () => {
-    const client  = new Client();
-    client.configure({
-        brokerURL: 'ws://localhost:8080/websocket',
-        onConnect: () => {
-            client.subscribe('/queue/messages', message => {
-                console.log('response: ', message)
-            });
-        },
-        // Helps during debugging, remove in production
-        debug: (str) => {
-            console.info(str);
-        }
-    });
-    client.activate();
-
-    return client;
+	const client = new Client();
+	client.configure({
+		brokerURL: 'ws://localhost:8080/websocket',
+		onConnect: () => {
+			client.subscribe('/queue/messages', (message) => {
+				console.log('response: ', message);
+			});
+		},
+		// Helps during debugging, remove in production
+		debug: (str) => {
+			console.info(str);
+		}
+	});
+	client.activate();
+	return client;
 };

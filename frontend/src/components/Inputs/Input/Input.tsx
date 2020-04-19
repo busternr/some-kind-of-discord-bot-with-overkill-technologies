@@ -1,21 +1,27 @@
 import React from 'react';
-import classNames from 'classnames'
+import classNames from 'classnames';
 
 import styles from './Input.module.scss';
-import {Field} from "react-final-form";
+import { Field } from 'react-final-form';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-    name: string;
-    label: string;
-    placeHolder?: string;
-    className?: string;
+	name: string;
+	label: string;
+	placeHolder?: string;
+	className?: string;
 }
 
-const Input: React.FC<Props> = ({ name, label,  placeHolder, className, ...rest }) => (
-    <div>
-        <label>{label}:</label>
-        <Field name={name} component="input" placeholder={placeHolder} className={classNames(className, styles.input)} {...rest} />
-    </div>
+const Input: React.FC<Props> = ({ name, label, placeHolder, className, ...rest }) => (
+	<div>
+		<label>{label}:</label>
+		<Field
+			name={name}
+			component="input"
+			placeholder={placeHolder}
+			className={classNames(className, styles.input)}
+			{...rest}
+		/>
+	</div>
 );
 
 export default Input;

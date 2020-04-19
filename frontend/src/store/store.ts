@@ -1,10 +1,10 @@
-import { init } from '@rematch/core'
-import session from './session'
+import { init } from '@rematch/core';
+import session from './session';
 
 const store = init({
-    models: {
-        session
-    },
+	models: {
+		session
+	}
 });
 
 export default store;
