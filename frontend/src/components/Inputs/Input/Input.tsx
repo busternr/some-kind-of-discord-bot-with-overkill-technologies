@@ -11,7 +11,6 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 	className?: string;
 }
 
-// eslint-disable-next-line react/prop-types
 const Input: React.FC<Props> = ({ name, label, placeHolder, className, ...rest }) => (
 	<div>
 		<label>{label}:</label>

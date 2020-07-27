@@ -4,6 +4,7 @@ module.exports = {
 		'es6': true
 	},
 	'extends': [
+		'react-app',
 		'eslint:recommended',
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
@@ -41,6 +42,8 @@ module.exports = {
 			'error',
 			'always'
 		],
-		"prettier/prettier": "error"
+		'prettier/prettier': 'error',
+		'react/prop-types': 'off',
+		'no-console': 'off'
 	}
 };
