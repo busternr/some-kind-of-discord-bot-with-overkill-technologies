@@ -12,8 +12,8 @@ interface FormValues {
 const client = connect();
 
 const LoginForm: React.FC = () => {
-	// eslint-disable-next-line no-unused-vars
 	const onSubmit = ({ username, password }: FormValues) => {
+		console.log(username, password);
 		client.publish({ destination: '/echo', body: 'Hello world' });
 	};
 
