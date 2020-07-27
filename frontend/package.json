@@ -75,7 +75,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "snapshots": "jest src/tests/storyshots.spec.ts"
   },
   "browserslist": {
     "production": [
@@ -96,6 +97,7 @@
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-storyshots": "^5.3.19",
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-scss": "^1.0.2",
     "@storybook/react": "^5.3.19",
@@ -117,6 +119,7 @@
     "prettier": "2.0.4",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-is": "^16.13.1",
+    "react-test-renderer": "^16.13.1",
     "tslint": "^6.1.1",
     "typescript": "~3.7.2"
   },
