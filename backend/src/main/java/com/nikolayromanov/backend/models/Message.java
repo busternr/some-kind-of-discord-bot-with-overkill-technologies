@@ -1,5 +1,6 @@
 package com.nikolayromanov.backend.models;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Message {
@@ -9,6 +10,15 @@ public class Message {
     public Message(Map<String, String> headers, Object body) {
         this.headers = headers;
         this.body = body;
+    }
+
+    public Message(Status status) {
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("statusCode", status.getStatusCode().getValue());
+        headers.put("message", status.getMessage());
+
+        this.headers = headers;
     }
 
     public Map<String, String> getHeaders() {

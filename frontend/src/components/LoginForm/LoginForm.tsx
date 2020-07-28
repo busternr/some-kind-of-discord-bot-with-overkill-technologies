@@ -14,7 +14,10 @@ const client = connect();
 const LoginForm: React.FC = () => {
 	const onSubmit = ({ username, password }: FormValues) => {
 		console.log(username, password);
-		client.publish({ destination: '/echo', body: 'Hello world' });
+		client.publish({
+			destination: '/queue/messages/echo',
+			body: '{\n' + '"headers": {"type": "echod"},\n' + '"body": "test" \n' + '}'
+		});
 	};
 
 	return (
