@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class EchoController {
-    @MessageMapping("queue/messages/echo")
-    @SendTo("/queue/messages")
+    @MessageMapping("queue/user/echo")
+    @SendTo("/queue/user")
     public Message echo(Message message) {
         return MessageHandler.handleMessage(message);
     }

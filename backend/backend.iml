@@ -25,6 +25,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.22" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.9" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.5.RELEASE" level="project" />
@@ -93,10 +96,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.2.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:webjars-locator:unknown" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:sockjs-client:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:stomp-websocket:2.3.3" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:bootstrap:3.3.7" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:jquery:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: io.nats:jnats:2.6.8" level="project" />
+    <orderEntry type="library" name="Maven: net.i2p.crypto:eddsa:0.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.6.2" level="project" />
   </component>
 </module>

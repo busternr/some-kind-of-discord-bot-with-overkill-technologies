@@ -1,6 +1,9 @@
 /node_modules
 *.log
-.idea
-backend/.mvn/
 .DS_Store
+.idea/
+backend/.mvn/
 backend/target/
+serviceMonitor/.mvn/
+serviceMonitor/target/
+

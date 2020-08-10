@@ -5,7 +5,7 @@ export const connect = () => {
 	client.configure({
 		brokerURL: 'ws://localhost:8080/websocket',
 		onConnect: () => {
-			client.subscribe('/queue/messages', (message) => {
+			client.subscribe('/queue/user', (message) => {
 				console.log('response: ', message);
 			});
 		},

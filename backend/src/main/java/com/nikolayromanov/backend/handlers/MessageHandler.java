@@ -1,6 +1,5 @@
 package com.nikolayromanov.backend.handlers;
 
-import com.nikolayromanov.backend.controllers.EchoController;
 import com.nikolayromanov.backend.models.Message;
 import com.nikolayromanov.backend.models.MessageType;
 import com.nikolayromanov.backend.models.Status;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessageHandler {
-    private static final Logger logger = LoggerFactory.getLogger(EchoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
 
     public static Message handleMessage(Message incomingMessage) {
         logger.info("Received message: {}", incomingMessage);
