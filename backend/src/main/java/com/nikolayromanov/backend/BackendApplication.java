@@ -1,10 +1,11 @@
 package com.nikolayromanov.backend;
 
+import com.nikolayromanov.platform.models.ServiceData;
+import com.nikolayromanov.platform.models.ServiceStatus;
+import com.nikolayromanov.platform.models.ServiceType;
+import com.nikolayromanov.platform.models.SystemMessageType;
+
 import com.google.gson.Gson;
-import com.nikolayromanov.backend.models.ServiceData;
-import com.nikolayromanov.backend.models.ServiceStatus;
-import com.nikolayromanov.backend.models.ServiceType;
-import com.nikolayromanov.backend.models.SystemMessageType;
 import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.Nats;
@@ -40,7 +41,7 @@ public class BackendApplication {
 	void init() throws IOException, XmlPullParserException {
 		MavenXpp3Reader reader = new MavenXpp3Reader();
 		Model model = reader.read(new FileReader("pom.xml"));
-		serviceData = new ServiceData(ServiceType.BackendCore, serviceName, model.getVersion(), ServiceStatus.Ready);
+		serviceData = new ServiceData(ServiceType.BackendCore, serviceName, ServiceStatus.Ready, model.getVersion());
 
 		Dispatcher dispatcher = natsConnection.createDispatcher((message) -> {
 			natsConnection.publish(SystemMessageType.MonitorPingReply.getValue(), message.getData());
