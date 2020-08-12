@@ -1,4 +1,4 @@
-package com.nikolayromanov.serviceMonitor.models;
+package com.nikolayromanov.platform.models;
 
 public enum SystemMessageType {
     MonitorRegisterService("monitor.registerService"),

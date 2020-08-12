@@ -1,9 +1,10 @@
 package com.nikolayromanov.serviceMonitor.services;
 
+import com.nikolayromanov.platform.models.ServiceData;
+import com.nikolayromanov.platform.models.SystemMessageType;
 import com.nikolayromanov.serviceMonitor.handlers.ServiceMonitorHandler;
 import com.nikolayromanov.serviceMonitor.models.NatsConnection;
-import com.nikolayromanov.serviceMonitor.models.ServiceData;
-import com.nikolayromanov.serviceMonitor.models.SystemMessageType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

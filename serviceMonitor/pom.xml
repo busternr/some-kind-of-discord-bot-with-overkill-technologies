@@ -16,9 +16,16 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<platform.version>1.0.0</platform.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.nikolayromanov</groupId>
+			<artifactId>platform</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

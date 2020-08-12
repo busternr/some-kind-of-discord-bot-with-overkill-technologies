@@ -1,8 +1,9 @@
 package com.nikolayromanov.serviceMonitor;
 
+import com.nikolayromanov.platform.models.SystemMessageType;
 import com.nikolayromanov.serviceMonitor.handlers.ServiceMonitorHandler;
 import com.nikolayromanov.serviceMonitor.models.NatsConnection;
-import com.nikolayromanov.serviceMonitor.models.SystemMessageType;
+
 import io.nats.client.Dispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

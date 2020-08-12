@@ -1,4 +1,4 @@
-package com.nikolayromanov.serviceMonitor.models;
+package com.nikolayromanov.platform.models;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public class ServiceData {
     private final String version;
     private boolean awaitsPingReply;
 
-    public ServiceData(ServiceType type, String name,ServiceStatus status, String version) {
+    public ServiceData(ServiceType type, String name, ServiceStatus status, String version) {
         this.type = type;
         this.name = name;
         this.status = status;
