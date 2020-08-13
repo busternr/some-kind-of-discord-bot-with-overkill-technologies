@@ -2,10 +2,11 @@ package com.nikolayromanov.serviceMonitor.handlers;
 
 import com.nikolayromanov.platform.models.ServiceData;
 import com.nikolayromanov.platform.models.SystemMessageType;
-import com.nikolayromanov.serviceMonitor.models.NatsConnection;
+import com.nikolayromanov.serviceMonitor.config.Context;
 import com.nikolayromanov.serviceMonitor.models.ServiceHandlerException;
 
 import com.google.gson.Gson;
+import io.nats.client.Connection;
 import io.nats.client.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,12 @@ import java.util.Optional;
 public class ServiceMonitorHandler {
     private static final Logger logger = LoggerFactory.getLogger(ServiceMonitorHandler.class);
 
-    private final NatsConnection natsConnection;
+    private final Connection connection;
     private List<ServiceData> servicesData = new ArrayList<>();
 
     @Autowired
-    public ServiceMonitorHandler(NatsConnection natsConnection) {
-        this.natsConnection = natsConnection;
+    public ServiceMonitorHandler(Context context) {
+        this.connection = context.getNatsConnection().getConnection();
     }
 
     public void handleSystemMessage(Message message, SystemMessageType systemMessageType) {
@@ -66,7 +67,7 @@ public class ServiceMonitorHandler {
         }
 
         servicesData.add(serviceData);
-        natsConnection.getConnection().publish("monitor.registerService", String.valueOf(serviceData.hashCode()).getBytes(StandardCharsets.UTF_8));
+        connection.publish("monitor.registerService", String.valueOf(serviceData.hashCode()).getBytes(StandardCharsets.UTF_8));
     }
 
     private void handleMonitorPingReply(int hashCode) {
