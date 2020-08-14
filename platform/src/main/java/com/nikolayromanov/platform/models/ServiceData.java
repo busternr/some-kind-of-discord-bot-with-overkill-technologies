@@ -17,6 +17,22 @@ public class ServiceData {
         this.awaitsPingReply = false;
     }
 
+    public ServiceType getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ServiceStatus getStatus() {
+        return status;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
     public boolean isAwaitsPingReply() {
         return awaitsPingReply;
     }
