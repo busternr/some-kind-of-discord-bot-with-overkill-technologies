@@ -6,4 +6,4 @@ backend/.mvn/
 backend/target/
 serviceMonitor/.mvn/
 serviceMonitor/target/
-
+platform/target/
