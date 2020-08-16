@@ -1,7 +1,8 @@
 package com.nikolayromanov.backend.models;
 
 public enum MessageType {
-    Echo("echo");
+    Echo("echo"),
+    AuthRegister("auth.register");
 
     private final String value;
 

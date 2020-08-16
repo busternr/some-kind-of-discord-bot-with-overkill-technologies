@@ -6,7 +6,10 @@ export const connect = () => {
 		brokerURL: 'ws://localhost:8080/websocket',
 		onConnect: () => {
 			client.subscribe('/queue/user', (message) => {
-				console.log('response: ', message);
+				console.log('Echo response: ', message);
+			});
+			client.subscribe('/queue/auth', (message) => {
+				console.log('Auth response: ', message);
 			});
 		},
 		// Helps during debugging, remove in production

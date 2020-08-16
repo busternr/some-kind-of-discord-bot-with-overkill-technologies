@@ -3,22 +3,16 @@ package com.nikolayromanov.backend.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Message {
-    private Map<String,String> headers;
-    private Object body;
+public class Message<T> {
+    private Map<String,String> headers = new HashMap<>();
+    private T body;
 
-    public Message(Map<String, String> headers, Object body) {
-        this.headers = headers;
-        this.body = body;
+    public Message() {
     }
 
-    public Message(Status status) {
-        Map<String, String> headers = new HashMap<>();
-
-        headers.put("statusCode", status.getStatusCode().getValue());
-        headers.put("message", status.getMessage());
-
+    public Message(Map<String, String> headers, T body) {
         this.headers = headers;
+        this.body = body;
     }
 
     public Map<String, String> getHeaders() {
@@ -29,11 +23,11 @@ public class Message {
         this.headers = headers;
     }
 
-    public Object getBody() {
+    public T getBody() {
         return body;
     }
 
-    public void setBody(Object body) {
+    public void setBody(T body) {
         this.body = body;
     }
 
@@ -43,5 +37,13 @@ public class Message {
                 "headers=" + headers +
                 ", body=" + body +
                 '}';
+    }
+
+    public void setReplyHeader(String type) {
+        headers.put("type", type + ".reply");
+    }
+
+    public void setStatusHeader(StatusCode statusCode) {
+        headers.put("statusCode", statusCode.getValue());
     }
 }

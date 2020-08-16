@@ -13,10 +13,17 @@ const client = connect();
 
 const LoginForm: React.FC = () => {
 	const onSubmit = ({ username, password }: FormValues) => {
-		console.log(username, password);
 		client.publish({
-			destination: '/queue/user/echo',
-			body: '{\n' + '"headers": {"type": "echo"},\n' + '"body": "test" \n' + '}'
+			destination: '/queue/user/auth',
+			body: `{
+   "headers":{
+      "type":"auth.register"
+   },
+   "body":{
+      "username":"niko",
+      "password":"niko"
+   }
+}`
 		});
 	};
 
