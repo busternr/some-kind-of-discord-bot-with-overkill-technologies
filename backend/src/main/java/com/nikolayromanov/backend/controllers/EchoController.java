@@ -2,6 +2,7 @@ package com.nikolayromanov.backend.controllers;
 
 import com.nikolayromanov.backend.handlers.MessageHandler;
 import com.nikolayromanov.backend.models.Message;
+import com.nikolayromanov.backend.models.MessageObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,7 +16,9 @@ public class EchoController {
 
     @MessageMapping("queue/user/echo")
     @SendTo("/queue/user")
-    public Message<String> echo(Message message) {
+    public MessageObject<String> echo(MessageObject<String> messageObject) {
+        Message<String, String> message = new Message<>(messageObject, new MessageObject<String>());
+
         return messageHandler.handleMessage(message);
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EchoHandler {
-    public void handleEchoMessage(Object payload) {
-
+    public String handleEchoMessage(String message) {
+        return "Hi, " + message;
     }
 }

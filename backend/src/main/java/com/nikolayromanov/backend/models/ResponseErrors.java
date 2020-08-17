@@ -15,8 +15,8 @@ public class ResponseErrors<T> {
         this.errors = errors;
     }
 
-    public static Message<ResponseErrors<ValidationError>> formatReplyErrorMessage(ResponseErrors<ValidationError> responseErrors) {
-        Message<ResponseErrors<ValidationError>> reply = new Message<>();
+    public static MessageObject<ResponseErrors<ValidationError>> formatReplyErrorMessage(ResponseErrors<ValidationError> responseErrors) {
+        MessageObject<ResponseErrors<ValidationError>> reply = new MessageObject<>();
         reply.setStatusHeader(StatusCode.VALIDATION_ERROR);
         reply.setBody(responseErrors);
 

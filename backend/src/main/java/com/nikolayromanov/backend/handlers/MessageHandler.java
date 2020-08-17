@@ -4,6 +4,7 @@ import com.nikolayromanov.backend.entities.User;
 import com.nikolayromanov.backend.exceptions.TechnicalException;
 import com.nikolayromanov.backend.models.Message;
 import com.nikolayromanov.backend.models.MessageType;
+import com.nikolayromanov.backend.models.MessageObject;
 import com.nikolayromanov.backend.models.ResponseErrors;
 import com.nikolayromanov.backend.models.StatusCode;
 
@@ -11,9 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class MessageHandler {
@@ -25,46 +23,47 @@ public class MessageHandler {
     @Autowired
     AuthHandler authHandler;
 
-    public <T> Message handleMessage(Message<T> incomingMessage) {
+    // TODO: Fix the mess with missing MessageObject and Message types!
+    public <T,S> MessageObject<S> handleMessage(Message<T,S> incomingMessage) {
         logger.info("Received message: {}", incomingMessage);
 
-        String type = incomingMessage.getHeaders().get("type");
-        Message message = new Message<>();
-        message.setReplyHeader(type);
+        MessageObject<T> incomingRequestMessage = new MessageObject<T>(incomingMessage.getRequestMessage());
+
+        String type = incomingRequestMessage.getHeaders().get("type");
+        MessageObject replyMessage = new MessageObject<>();
+        replyMessage.setReplyHeader(type);
         MessageType messageType = MessageType.findByValue(type);
 
         if(messageType == null) {
-            Message<T> reply = new Message<>();
+            MessageObject<S> reply = new MessageObject<>();
             reply.setStatusHeader(StatusCode.ENDPOINT_NOT_FOUND);
 
             return reply;
         }
 
         try {
-            handleMessageBasedOnType(messageType, incomingMessage.getBody());
-            message.setStatusHeader(StatusCode.OK);
+            replyMessage.setBody(handleMessageBasedOnType(messageType, incomingRequestMessage.getBody()));
+            replyMessage.setStatusHeader(StatusCode.OK);
 
-            return message;
+            return replyMessage;
         } catch (TechnicalException exception) {
             ResponseErrors<String> responseErrors = new ResponseErrors<>();
             responseErrors.getErrors().add(exception.getMessage());
-            message.setStatusHeader(StatusCode.INTERNAL_SERVER_ERROR);
-            message.setBody(responseErrors);
+            replyMessage.setStatusHeader(StatusCode.INTERNAL_SERVER_ERROR);
+            replyMessage.setBody(responseErrors);
 
-            return message;
+            return replyMessage;
         }
     }
 
-    private <T> void handleMessageBasedOnType(MessageType messageType, T payload) throws TechnicalException {
+    private <T,S> S handleMessageBasedOnType(MessageType messageType, T payload) throws TechnicalException {
         switch (messageType) {
             case Echo:
-                echoHandler.handleEchoMessage(payload);
-                break;
+                return (S) echoHandler.handleEchoMessage((String) payload);
             case AuthRegister:
-                authHandler.handleAuthRegister((User) payload);
-                break;
+                return (S) authHandler.handleAuthRegister((User) payload);
             default:
-                break;
+                return null;
         }
     }
 }
