@@ -5,8 +5,6 @@ import com.nikolayromanov.backend.handlers.AuthHandler;
 import com.nikolayromanov.backend.handlers.MessageHandler;
 import com.nikolayromanov.backend.models.Message;
 import com.nikolayromanov.backend.models.MessageObject;
-import com.nikolayromanov.backend.models.ResponseErrors;
-import com.nikolayromanov.backend.models.ValidationError;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,14 +23,8 @@ public class AuthController {
     @MessageMapping("queue/user/auth")
     @SendTo("/queue/user")
     // TODO: Fix the mess with missing MessageObject and Message types!
-    public MessageObject authRegister(MessageObject<User> messageObject) {
-        Message<User, NullType> message = new Message<>(messageObject, new MessageObject<NullType>());
-
-        MessageObject<ResponseErrors<ValidationError>> validationErrorsReplyMessage = authHandler.validateAuthRegisterMessage(messageObject);
-
-        if(validationErrorsReplyMessage != null) {
-            return validationErrorsReplyMessage;
-        }
+    public MessageObject<?> authRegister(MessageObject<User> messageObject) {
+        Message<User, NullType> message = new Message<User, NullType>(messageObject, new MessageObject<NullType>());
 
         return messageHandler.handleMessage(message);
     }

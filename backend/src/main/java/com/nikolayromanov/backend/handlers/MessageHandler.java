@@ -2,6 +2,7 @@ package com.nikolayromanov.backend.handlers;
 
 import com.nikolayromanov.backend.entities.User;
 import com.nikolayromanov.backend.exceptions.TechnicalException;
+import com.nikolayromanov.backend.exceptions.ValidationException;
 import com.nikolayromanov.backend.models.Message;
 import com.nikolayromanov.backend.models.MessageType;
 import com.nikolayromanov.backend.models.MessageObject;
@@ -54,9 +55,14 @@ public class MessageHandler {
 
             return replyMessage;
         }
+        catch (ValidationException exception) {
+            replyMessage.setBody(exception.getValidationErrors());
+
+            return replyMessage;
+        }
     }
 
-    private <T,S> S handleMessageBasedOnType(MessageType messageType, T payload) throws TechnicalException {
+    private <T,S> S handleMessageBasedOnType(MessageType messageType, T payload) throws TechnicalException, ValidationException {
         switch (messageType) {
             case Echo:
                 return (S) echoHandler.handleEchoMessage((String) payload);

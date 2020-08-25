@@ -2,6 +2,7 @@ package com.nikolayromanov.backend.handlers;
 
 import com.nikolayromanov.backend.entities.User;
 import com.nikolayromanov.backend.exceptions.TechnicalException;
+import com.nikolayromanov.backend.exceptions.ValidationException;
 import com.nikolayromanov.backend.models.MessageObject;
 import com.nikolayromanov.backend.models.ResponseErrors;
 import com.nikolayromanov.backend.models.ValidationError;
@@ -18,31 +19,32 @@ public class AuthHandler {
     @Autowired
     UserRepository userRepository;
 
-    public NullType handleAuthRegister(User user) throws TechnicalException {
-        userRepository.save(user);
+    public MessageObject<NullType> handleAuthRegister(User user) throws TechnicalException, ValidationException {
+        validateAuthRegisterMessage(user);
 
         if(userRepository.findByUsername(user.getUsername()) != null) {
             throw new TechnicalException("User with the same username already exists.");
         }
+        userRepository.save(user);
 
         return null;
     }
 
-    public MessageObject<ResponseErrors<ValidationError>> validateAuthRegisterMessage(MessageObject<User> message) {
+    public MessageObject<ResponseErrors<ValidationError>> validateAuthRegisterMessage(User user) throws ValidationException {
         ResponseErrors<ValidationError> responseErrors = new ResponseErrors<>();
         ArrayList<ValidationError> validationErrors = new ArrayList<>();
 
-        if(message.getBody().getUsername() == null) {
+        if(user.getUsername() == null) {
             validationErrors.add(new ValidationError("username", ResponseErrors.INVALID));
         }
-        if(message.getBody().getPassword() == null) {
+        if(user.getPassword() == null) {
             validationErrors.add(new ValidationError("password", ResponseErrors.INVALID));
         }
 
         if(validationErrors.size() > 0) {
             responseErrors.setErrors(validationErrors);
 
-            return ResponseErrors.formatReplyErrorMessage(responseErrors);
+            throw new ValidationException(responseErrors);
         }
 
         return null;
