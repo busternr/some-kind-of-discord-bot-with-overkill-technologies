@@ -26,9 +26,9 @@ public class MessageHandler {
 
     // TODO: Fix the mess with missing MessageObject and Message types!
     public <T,S> MessageObject<S> handleMessage(Message<T,S> incomingMessage) {
-        logger.info("Received message: {}", incomingMessage);
-
         MessageObject<T> incomingRequestMessage = new MessageObject<T>(incomingMessage.getRequestMessage());
+
+        logger.info("Received message: {}", incomingMessage.getRequestMessage());
 
         String type = incomingRequestMessage.getHeaders().get("type");
         MessageObject replyMessage = new MessageObject<>();
@@ -57,6 +57,12 @@ public class MessageHandler {
         }
         catch (ValidationException exception) {
             replyMessage.setBody(exception.getValidationErrors());
+
+            return replyMessage;
+        } catch (Exception exception) {
+            ResponseErrors<String> responseErrors = new ResponseErrors<>();
+            replyMessage.setStatusHeader(StatusCode.UNKNOWN_SERVER_ERROR);
+            replyMessage.setBody(responseErrors);
 
             return replyMessage;
         }

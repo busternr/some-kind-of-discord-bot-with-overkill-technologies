@@ -24,7 +24,7 @@ public class AuthController {
     @SendTo("/queue/user")
     // TODO: Fix the mess with missing MessageObject and Message types!
     public MessageObject<?> authRegister(MessageObject<User> messageObject) {
-        Message<User, NullType> message = new Message<User, NullType>(messageObject, new MessageObject<NullType>());
+        Message<User, NullType> message = new Message<>(messageObject, new MessageObject<NullType>());
 
         return messageHandler.handleMessage(message);
     }
