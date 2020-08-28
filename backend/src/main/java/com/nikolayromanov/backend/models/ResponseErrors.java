@@ -2,7 +2,7 @@ package com.nikolayromanov.backend.models;
 
 import java.util.ArrayList;
 
-public class ResponseErrors<T> {
+public class ResponseErrors<T> implements ResponseBody {
     public static final String INVALID = "invalid";
 
     ArrayList<T> errors = new ArrayList<>();

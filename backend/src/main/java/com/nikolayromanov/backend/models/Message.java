@@ -1,6 +1,6 @@
 package com.nikolayromanov.backend.models;
 
-public class Message<T,S> {
+public class Message<T extends RequestBody,S extends ResponseBody> {
     MessageObject<T> requestMessage;
     MessageObject<S> replyMessage;
 

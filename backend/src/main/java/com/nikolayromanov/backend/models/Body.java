@@ -1,4 +1,4 @@
 package com.nikolayromanov.backend.models;
 
-public enum ErrorCode {
+public interface Body {
 }

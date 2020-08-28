@@ -3,7 +3,7 @@ package com.nikolayromanov.backend.handlers;
 import com.nikolayromanov.backend.entities.User;
 import com.nikolayromanov.backend.exceptions.TechnicalException;
 import com.nikolayromanov.backend.exceptions.ValidationException;
-import com.nikolayromanov.backend.models.MessageObject;
+import com.nikolayromanov.backend.models.messages.Null;
 import com.nikolayromanov.backend.models.ResponseErrors;
 import com.nikolayromanov.backend.models.ValidationError;
 import com.nikolayromanov.backend.repositories.UserRepository;
@@ -11,7 +11,6 @@ import com.nikolayromanov.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.lang.model.type.NullType;
 import java.util.ArrayList;
 
 @Component
@@ -19,7 +18,7 @@ public class AuthHandler {
     @Autowired
     UserRepository userRepository;
 
-    public MessageObject<NullType> handleAuthRegister(User user) throws TechnicalException, ValidationException {
+    public Null handleAuthRegister(User user) throws TechnicalException, ValidationException {
         validateAuthRegisterMessage(user);
 
         if(userRepository.findByUsername(user.getUsername()) != null) {
@@ -30,7 +29,7 @@ public class AuthHandler {
         return null;
     }
 
-    public MessageObject<ResponseErrors<ValidationError>> validateAuthRegisterMessage(User user) throws ValidationException {
+    public void validateAuthRegisterMessage(User user) throws ValidationException {
         ResponseErrors<ValidationError> responseErrors = new ResponseErrors<>();
         ArrayList<ValidationError> validationErrors = new ArrayList<>();
 
@@ -46,7 +45,5 @@ public class AuthHandler {
 
             throw new ValidationException(responseErrors);
         }
-
-        return null;
     }
 }

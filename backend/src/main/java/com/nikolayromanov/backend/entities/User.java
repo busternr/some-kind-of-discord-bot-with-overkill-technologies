@@ -1,5 +1,7 @@
 package com.nikolayromanov.backend.entities;
 
+import com.nikolayromanov.backend.models.RequestBody;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements RequestBody {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
