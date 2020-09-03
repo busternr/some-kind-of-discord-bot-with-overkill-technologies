@@ -22,4 +22,11 @@ public class ResponseErrors<T> implements ResponseBody {
 
         return reply;
     }
+
+    @Override
+    public String toString() {
+        return "ResponseErrors{" +
+                "errors=" + errors +
+                '}';
+    }
 }

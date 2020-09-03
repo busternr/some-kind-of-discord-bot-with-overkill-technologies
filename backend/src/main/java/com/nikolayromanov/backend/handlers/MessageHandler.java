@@ -50,6 +50,8 @@ public class MessageHandler {
 
             return replyMessage;
         } catch (TechnicalException exception) {
+            logger.warn("Caught TechnicalException exception: {}", exception.getMessage());
+
             ResponseErrors<String> responseErrors = new ResponseErrors<>();
             responseErrors.getErrors().add(exception.getMessage());
             replyMessage.setStatusHeader(StatusCode.INTERNAL_SERVER_ERROR);
@@ -58,10 +60,15 @@ public class MessageHandler {
             return replyMessage;
         }
         catch (ValidationException exception) {
+            logger.warn("Caught ValidationException exception: {}", exception.getValidationErrors());
+
+            replyMessage.setStatusHeader(StatusCode.VALIDATION_ERROR);
             replyMessage.setBody(exception.getValidationErrors());
 
             return replyMessage;
         } catch (Exception exception) {
+            logger.warn("Caught Exception exception: {}", exception.getMessage());
+
             ResponseErrors<String> responseErrors = new ResponseErrors<>();
             replyMessage.setStatusHeader(StatusCode.UNKNOWN_SERVER_ERROR);
             replyMessage.setBody(responseErrors);

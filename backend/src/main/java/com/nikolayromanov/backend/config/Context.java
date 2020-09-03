@@ -21,6 +21,8 @@ public class Context {
             this.natsConnection = new NatsConnection();
         } catch (IOException | InterruptedException exception) {
             logger.error("Cannot create NatsConnection: {}", exception.getMessage());
+
+            System.exit(1);
         }
 
     }
