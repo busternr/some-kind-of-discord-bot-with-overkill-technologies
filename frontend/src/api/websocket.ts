@@ -8,9 +8,6 @@ export const connect = () => {
 			client.subscribe('/queue/user', (message) => {
 				console.log('Echo response: ', message);
 			});
-			client.subscribe('/queue/auth', (message) => {
-				console.log('Auth response: ', message);
-			});
 		},
 		// Helps during debugging, remove in production
 		debug: (str) => {
