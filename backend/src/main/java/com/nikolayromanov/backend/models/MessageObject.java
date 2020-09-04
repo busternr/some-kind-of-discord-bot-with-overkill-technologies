@@ -3,7 +3,7 @@ package com.nikolayromanov.backend.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageObject<T extends Body> {
+public class MessageObject<T> {
     private Map<String,String> headers = new HashMap<>();
     private T body;
 
