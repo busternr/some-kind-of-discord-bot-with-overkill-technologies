@@ -19,8 +19,8 @@ const sendAuthMessage = () =>
       "type":"auth.register"
    },
    "body":{
-      "username":"niko3",
-      "password":"niko3"
+      "username":"niko34",
+      "password":"niko34"
    }
 }`);
 
@@ -30,18 +30,29 @@ const sendValidationAuthMessage = () =>
       "type":"auth.register"
    },
    "body":{
-      "usernamed":"niko3",
-      "password":"niko3"
+      "adsadas":"niko3",
+      "dasdasd":"niko3"
    }
 }`);
 
 const sendEchoMessage = () =>
 	sendMessage(`{
    "headers":{
-      "type":"echo"
+      "type":"echo.hi"
    },
    "body":{
       "message":"test"
+   }
+}`);
+
+const sendAuthTestMessage = () =>
+	sendMessage(`{
+   "headers":{
+      "type":"auth.test"
+   },
+   "body":{
+      "username":"niko3",
+      "password":"niko3"
    }
 }`);
 
@@ -70,6 +81,9 @@ const LoginForm: React.FC = () => {
 						</Button>
 						<Button onClick={sendValidationAuthMessage} size={ButtonSize.Big}>
 							Send VALIDATION Auth Message
+						</Button>
+						<Button onClick={sendAuthTestMessage} size={ButtonSize.Big}>
+							Send test Auth Message
 						</Button>
 					</div>
 				</form>
