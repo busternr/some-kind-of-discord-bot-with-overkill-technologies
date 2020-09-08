@@ -3,10 +3,8 @@ package com.nikolayromanov.backend.processors;
 import com.nikolayromanov.backend.controllers.BaseController;
 import com.nikolayromanov.backend.exceptions.TechnicalException;
 import com.nikolayromanov.backend.exceptions.ValidationException;
-import com.nikolayromanov.backend.models.MessageObject;
+import com.nikolayromanov.backend.models.Message;
 import com.nikolayromanov.backend.models.MessageType;
-import com.nikolayromanov.backend.models.RequestBody;
-import com.nikolayromanov.backend.models.ResponseBody;
 import com.nikolayromanov.backend.models.ResponseErrors;
 import com.nikolayromanov.backend.models.StatusCode;
 import com.nikolayromanov.backend.models.annotations.WSController;
@@ -70,12 +68,12 @@ public class EndpointProcessor {
 
     @MessageMapping("queue/user/messages")
     @SendTo("/queue/user")
-    public MessageObject<ResponseBody> handleMessage(MessageObject<Map<String, String>> messageObject) {
-        logger.info("Received message: {}", messageObject);
+    public Message handleMessage(Message message) {
+        logger.info("Received message: {}", message);
 
-        MessageObject<ResponseBody> responseMessage = new MessageObject<>();
-        ResponseBody responseBody;
-        String messageTypeStr = messageObject.getHeaders().get("type");
+        Message responseMessage = new Message();
+        Object responseBody;
+        String messageTypeStr = message.getHeaders().get("type");
         MessageType messageType = MessageType.findByValue(messageTypeStr);
 
         if(messageType == null) {
@@ -85,15 +83,15 @@ public class EndpointProcessor {
         }
 
         Method method = annotatedMethods.get(messageTypeStr);
-        RequestBody body = (RequestBody) this.processMessageBody(messageObject.getBody(), method.getParameterTypes()[0]);
+        Object requestBody = this.processMessageBody(message.getBody(), method.getParameterTypes()[0]);
 
+        responseMessage.setHeaders(message.getHeaders());
         responseMessage.setReplyHeader(messageTypeStr);
 
         try {
             Object controller = this.getControllerFromMessageType(messageTypeStr);
-            responseBody = (ResponseBody) method.invoke(controller, body);
+            responseBody = method.invoke(controller, requestBody);
 
-            responseMessage.setHeaders(messageObject.getHeaders());
             responseMessage.setStatusHeader(StatusCode.OK);
             responseMessage.setBody(responseBody);
         } catch (InvocationTargetException | IllegalAccessException exception) {
@@ -104,7 +102,7 @@ public class EndpointProcessor {
         return responseMessage;
     }
 
-    private MessageObject<ResponseBody> resolveException(Throwable exception, MessageObject<ResponseBody> responseMessage) {
+    private Message resolveException(Throwable exception, Message responseMessage) {
         if(exception instanceof TechnicalException) {
             logger.warn("Caught TechnicalException exception: {}", exception.getMessage());
 
@@ -129,17 +127,14 @@ public class EndpointProcessor {
             logger.warn("Caught Exception exception: {}", exception.getMessage());
 
             ResponseErrors<String> responseErrors = new ResponseErrors<>();
-            ArrayList<String> errors = new ArrayList<>();
-            errors.add(exception.getMessage());
-
-            responseErrors.setErrors(errors);
+            responseErrors.getErrors().add(exception.getMessage());
             responseMessage.setStatusHeader(StatusCode.UNKNOWN_SERVER_ERROR);
             responseMessage.setBody(responseErrors);
 
             return responseMessage;
         }
     }
-    private <T> T processMessageBody(Map<String, String> messageBody, Class<T> cls) {
+    private <T> T processMessageBody(Object messageBody, Class<T> cls) {
         Gson gson = new Gson();
 
         return gson.fromJson(gson.toJson(messageBody), cls);

@@ -17,7 +17,7 @@ public class EchoController implements BaseController {
         return "echo";
     }
 
-    @WSMessageMapping("echo")
+    @WSMessageMapping("echo.hi")
     public StringMessageBody echo(StringMessageBody stringMessageBody) {
         return echoHandler.handleEchoMessage(stringMessageBody);
     }

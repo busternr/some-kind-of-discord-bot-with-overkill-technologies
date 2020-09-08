@@ -3,21 +3,11 @@ package com.nikolayromanov.backend.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageObject<T> {
+public class Message {
     private Map<String,String> headers = new HashMap<>();
-    private T body;
+    private Object body;
 
-    public MessageObject() {
-    }
-
-    public MessageObject (MessageObject<T> message){
-        this.headers = message.getHeaders();
-        this.body = message.getBody();
-    }
-
-    public MessageObject(Map<String, String> headers, T body) {
-        this.headers = headers;
-        this.body = body;
+    public Message() {
     }
 
     public Map<String, String> getHeaders() {
@@ -28,11 +18,11 @@ public class MessageObject<T> {
         this.headers = headers;
     }
 
-    public T getBody() {
+    public Object getBody() {
         return body;
     }
 
-    public void setBody(T body) {
+    public void setBody(Object body) {
         this.body = body;
     }
 
