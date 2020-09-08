@@ -11,21 +11,54 @@ interface FormValues {
 
 const client = connect();
 
-const LoginForm: React.FC = () => {
-	const onSubmit = ({ username, password }: FormValues) => {
-		client.publish({
-			destination: '/queue/user/auth',
-			body: `{
+const sendMessage = (body: string) => client.publish({ destination: '/queue/user/messages', body });
+
+const sendAuthMessage = () =>
+	sendMessage(`{
    "headers":{
       "type":"auth.register"
    },
    "body":{
-      "username":"niko",
-      "password":"niko"
+      "username":"niko34",
+      "password":"niko34"
    }
-}`
-		});
-	};
+}`);
+
+const sendValidationAuthMessage = () =>
+	sendMessage(`{
+   "headers":{
+      "type":"auth.register"
+   },
+   "body":{
+      "adsadas":"niko3",
+      "dasdasd":"niko3"
+   }
+}`);
+
+const sendEchoMessage = () =>
+	sendMessage(`{
+   "headers":{
+      "type":"echo.hi"
+   },
+   "body":{
+      "message":"test"
+   }
+}`);
+
+const sendAuthTestMessage = () =>
+	sendMessage(`{
+   "headers":{
+      "type":"auth.test"
+   },
+   "body":{
+      "username":"niko3",
+      "password":"niko3"
+   }
+}`);
+
+const LoginForm: React.FC = () => {
+	// tslint:disable-next-line:no-empty
+	const onSubmit = ({ username, password }: FormValues) => {};
 
 	return (
 		<Form
@@ -35,9 +68,24 @@ const LoginForm: React.FC = () => {
 					<h3>Login form</h3>
 					<Input name="username" label="Username" placeHolder="username" />
 					<Input name="password" label="Password" placeHolder="password" type="password" />
-					<Button type="submit" size={ButtonSize.Normal}>
-						Submit
-					</Button>
+					{/*<Button type="submit" size={ButtonSize.Normal}>*/}
+					{/*	Submit*/}
+					{/*</Button>*/}
+					<div>
+						<br />
+						<Button onClick={sendEchoMessage} size={ButtonSize.Big}>
+							Send Echo Message
+						</Button>
+						<Button onClick={sendAuthMessage} size={ButtonSize.Big}>
+							Send Auth Message
+						</Button>
+						<Button onClick={sendValidationAuthMessage} size={ButtonSize.Big}>
+							Send VALIDATION Auth Message
+						</Button>
+						<Button onClick={sendAuthTestMessage} size={ButtonSize.Big}>
+							Send test Auth Message
+						</Button>
+					</div>
 				</form>
 			)}
 		/>

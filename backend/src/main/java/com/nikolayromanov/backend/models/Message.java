@@ -1,27 +1,44 @@
 package com.nikolayromanov.backend.models;
 
-public class Message<T extends RequestBody,S extends ResponseBody> {
-    MessageObject<T> requestMessage;
-    MessageObject<S> replyMessage;
+import java.util.HashMap;
+import java.util.Map;
 
-    public Message(MessageObject<T> requestMessage, MessageObject<S> replyMessage) {
-        this.requestMessage = requestMessage;
-        this.replyMessage = replyMessage;
+public class Message {
+    private Map<String,String> headers = new HashMap<>();
+    private Object body;
+
+    public Message() {
     }
 
-    public MessageObject<T> getRequestMessage() {
-        return requestMessage;
+    public Map<String, String> getHeaders() {
+        return headers;
     }
 
-    public void setRequestMessage(MessageObject<T> requestMessage) {
-        this.requestMessage = requestMessage;
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
     }
 
-    public MessageObject<S> getReplyMessage() {
-        return replyMessage;
+    public Object getBody() {
+        return body;
     }
 
-    public void setReplyMessage(MessageObject<S> replyMessage) {
-        this.replyMessage = replyMessage;
+    public void setBody(Object body) {
+        this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "headers=" + headers +
+                ", body=" + body +
+                '}';
+    }
+
+    public void setReplyHeader(String type) {
+        headers.put("type", type + ".reply");
+    }
+
+    public void setStatusHeader(StatusCode statusCode) {
+        headers.put("statusCode", statusCode.getValue());
     }
 }

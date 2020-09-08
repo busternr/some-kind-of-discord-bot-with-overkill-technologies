@@ -1,7 +1,7 @@
 package com.nikolayromanov.backend.models;
 
 public enum MessageType {
-    Echo("echo"),
+    EchoHi("echo.hi"),
     AuthRegister("auth.register");
 
     private final String value;
@@ -16,9 +16,11 @@ public enum MessageType {
 
     public static MessageType findByValue(final String value) {
         for (MessageType e : MessageType.values()) {
-            if (e.getValue().equalsIgnoreCase(value))
+            if (e.getValue().equalsIgnoreCase(value)) {
                 return e;
+            }
         }
+
         return null;
     }
 }
