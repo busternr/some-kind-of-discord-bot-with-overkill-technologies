@@ -10,6 +10,10 @@ public class Message {
     public Message() {
     }
 
+    public Message(Object body) {
+        this.body = body;
+    }
+
     public Map<String, String> getHeaders() {
         return headers;
     }
@@ -34,11 +38,15 @@ public class Message {
                 '}';
     }
 
+    public void setHeader(String header, String value) {
+        headers.put(header, value);
+    }
+
     public void setReplyHeader(String type) {
-        headers.put("type", type + ".reply");
+        this.setHeader("type", type + ".reply");
     }
 
     public void setStatusHeader(StatusCode statusCode) {
-        headers.put("statusCode", statusCode.getValue());
+        this.setHeader("statusCode", statusCode.getValue());
     }
 }

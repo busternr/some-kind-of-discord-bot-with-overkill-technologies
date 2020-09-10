@@ -1,5 +1,7 @@
 package com.nikolayromanov.backend.models.messages;
 
+import java.util.Map;
+
 public class StringMessageBody {
     private String message;
 
@@ -8,6 +10,10 @@ public class StringMessageBody {
 
     public StringMessageBody(String message) {
         this.message = message;
+    }
+
+    public StringMessageBody(Map<String, String> body) {
+        this.message = body.get("message");
     }
 
     public String getMessage() {
