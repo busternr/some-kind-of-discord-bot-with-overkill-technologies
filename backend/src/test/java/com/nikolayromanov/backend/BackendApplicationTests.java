@@ -48,6 +48,17 @@ public class BackendApplicationTests {
 	}
 
 	@Test
+	public void testMessageNotFound() throws InterruptedException {
+		Message message = new Message();
+		message.setHeader("type", "not.existing.message");
+
+		sendMessage(message);
+
+		assertReplyHeader("not.existing.message.reply");
+		assertStatusCodeHeader(StatusCode.ENDPOINT_NOT_FOUND);
+	}
+
+	@Test
 	public void testEchoHiMessage() throws InterruptedException {
 		sendMessage(createMessage(MessageType.EchoHi, new StringMessageBody("test")));
 

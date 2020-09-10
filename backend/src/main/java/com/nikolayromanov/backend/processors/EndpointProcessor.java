@@ -76,6 +76,9 @@ public class EndpointProcessor {
         String messageTypeStr = message.getHeaders().get("type");
         MessageType messageType = MessageType.findByValue(messageTypeStr);
 
+        responseMessage.setHeaders(message.getHeaders());
+        responseMessage.setReplyHeader(messageTypeStr);
+
         if(messageType == null) {
             responseMessage.setStatusHeader(StatusCode.ENDPOINT_NOT_FOUND);
 
@@ -84,9 +87,6 @@ public class EndpointProcessor {
 
         Method method = annotatedMethods.get(messageTypeStr);
         Object requestBody = this.processMessageBody(message.getBody(), method.getParameterTypes()[0]);
-
-        responseMessage.setHeaders(message.getHeaders());
-        responseMessage.setReplyHeader(messageTypeStr);
 
         try {
             Object controller = this.getControllerFromMessageType(messageTypeStr);
