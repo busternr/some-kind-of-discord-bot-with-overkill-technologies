@@ -98,6 +98,7 @@ public class EndpointProcessor {
             // Because any exception thrown during method.invoke will be wrapped in InvocationTargetException
             return this.resolveException(exception.getCause(), responseMessage);
         }
+        logger.info("Sent response message: {}", responseMessage);
 
         return responseMessage;
     }
